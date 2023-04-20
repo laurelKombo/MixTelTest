@@ -94,6 +94,7 @@ internal class Program
         var distances = new double[inputCoordinateList.Length];
         // this variable will save the closest vehicle position id
         var positionId = new int[inputCoordinateList.Length];
+      //  var ct = new int[inputCoordinateList.Length];
 
         // Loop through input coordinates
         for (var i = 0; i < inputCoordinateList.Length; i++)
@@ -104,16 +105,16 @@ internal class Program
             //Get the maximum point of the range of search
             var rangeIndex = positions.FindIndex(f => f.Distance > distanceFromCentroid && ArePointsAligned(centroid, inputCoordinateList[i], f));
 
-            var rangeIndex2 = positions.FindLastIndex(f => f.Distance < distanceFromCentroid && ArePointsAligned(centroid, inputCoordinateList[i], f));
-
+          
             // Loop through smallest range
-            for (var y = rangeIndex2; y <= rangeIndex; y++)
+            for (var y = 0; y <= rangeIndex; y++)
             {
                 var d = GetDistanceFromTo(inputCoordinateList[i].Longitude, inputCoordinateList[i].Latitude, positions[y].Longitude, positions[y].Latitude);
 
                 if (distances[i] != 0 && !(distances[i] > d)) continue;
                 distances[i] = d;
                 positionId[i] = positions[y].PositionId;
+              //  ct[i]++;
 
             }
 
@@ -121,7 +122,7 @@ internal class Program
 
         for (var i = 0; i < inputCoordinateList.Length; i++)
         {
-            Console.WriteLine("position {0} is closer to Vehicle position ID: {1} ", i + 1, positionId[i]);
+            Console.WriteLine("position {0} is closer to Vehicle position ID: {1}  ", i + 1, positionId[i]);
         }
     }
 
